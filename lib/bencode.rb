@@ -1,5 +1,6 @@
 require 'stringio'
 
+require 'bencode/version'
 ##
 # Describes Bencode class and its methods
 #
@@ -11,7 +12,7 @@ require 'stringio'
 # => { 'bar' => 'spam', 'foo' => 42 }
 #
 
-class Bencode
+module Bencode
   ##
   # Describes Decoder class and its methods
   #
@@ -89,13 +90,13 @@ class Bencode
     end
 
     def self.init_io(obj)
-      if obj.is_a?(IO) || obj.is_a?(StringIO)
-        io = obj
-      elsif obj.respond_to? :to_s
-        io = StringIO.new obj.to_s
-      else
-        io = StringIO.new obj
-      end
+      io = if obj.is_a?(IO) || obj.is_a?(StringIO)
+             obj
+           elsif obj.respond_to? :to_s
+             StringIO.new obj.to_s
+           else
+             StringIO.new obj
+           end
 
       io
     end

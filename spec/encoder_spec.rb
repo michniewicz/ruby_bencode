@@ -12,7 +12,7 @@ describe Bencode::Encoder do
   end
 
   it 'encodes array' do
-    expect(Bencode::Encoder.encode(%w(foo baar))).to eq 'l3:foo4:baare'
+    expect(Bencode::Encoder.encode(%w[foo baar])).to eq 'l3:foo4:baare'
   end
 
   it 'encodes hash' do

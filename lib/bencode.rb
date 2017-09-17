@@ -29,6 +29,7 @@ module Bencode
       decode(File.open(path, 'rb').read)
     end
 
+    # rubocop:disable MethodLength
     def self.parse(obj)
       io = init_io(obj)
 
@@ -43,6 +44,7 @@ module Bencode
         parse_string io
       end
     end
+    # rubocop:enable MethodLength
 
     def self.parse_list(io)
       io.getc if peek(io) == 'l'
@@ -76,7 +78,7 @@ module Bencode
       begin
         length = num.chop.to_i
         str = io.read(length)
-      rescue
+      rescue StandardError
         raise DecodeError, 'invalid string length'
       end
 
@@ -110,6 +112,7 @@ module Bencode
   class Encoder
     # Encodes given object
     # Returns encoded data as String
+    # rubocop:disable MethodLength
     def self.encode(obj)
       case obj
       when Integer
@@ -126,6 +129,7 @@ module Bencode
         raise EncodeError
       end
     end
+    # rubocop:enable MethodLength
 
     def self.encode_string(string)
       "#{string.length}:#{string}"

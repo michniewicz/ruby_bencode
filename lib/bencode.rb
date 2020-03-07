@@ -31,6 +31,8 @@ module Bencode
 
     # rubocop:disable MethodLength
     def self.parse(obj)
+      return nil if obj.nil?
+  
       io = init_io(obj)
 
       case peek(io)
